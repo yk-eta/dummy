@@ -2,8 +2,11 @@ package com.example.springboot.controller;
 
 import com.example.springboot.dto.TestDto;
 import com.example.springboot.service.TestService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RequestMapping("test")
@@ -17,28 +20,28 @@ public class TestController {
 	}
 
 	@GetMapping
-	public List<TestDto> list() {
-		return service.list();
+	public ResponseEntity<List<TestDto>> list() {
+		return new ResponseEntity<>(service.list(), HttpStatus.OK);
 	}
 
 	@GetMapping("/{id}")
-	public TestDto get(@PathVariable int id) {
-		return service.get(id);
+	public ResponseEntity<TestDto> get(@PathVariable int id) {
+		return new ResponseEntity<>(service.get(id), HttpStatus.OK);
 	}
 
 	@PostMapping
-	public int create(@RequestBody TestDto dto) {
-		return service.create(dto);
+	public ResponseEntity<Integer> create(@Valid @RequestBody TestDto dto) {
+		return new ResponseEntity<>(service.create(dto), HttpStatus.CREATED);
 	}
 
 	@PostMapping("/{id}")
-	public int update(@RequestBody TestDto dto, @PathVariable int id) {
-		return service.update(id, dto);
+	public ResponseEntity<Integer> update(@Valid @RequestBody TestDto dto, @PathVariable int id) {
+		return new ResponseEntity<>(service.update(id, dto), HttpStatus.OK);
 	}
 
 	@DeleteMapping("/{id}")
-	public int delete(@PathVariable int id) {
-		return service.delete(id);
+	public ResponseEntity<Integer> delete(@PathVariable int id) {
+		return new ResponseEntity<>(service.delete(id), HttpStatus.OK);
 	}
 
 }
