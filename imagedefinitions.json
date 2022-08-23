@@ -1,0 +1,6 @@
+[
+  {
+    "name": "tsc-demo",
+    "imageUri": "192822864077.dkr.ecr.ap-northeast-1.amazonaws.com/tsc-demo:latest"
+  }
+]
