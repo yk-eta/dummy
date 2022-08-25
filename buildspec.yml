@@ -1,8 +1,13 @@
 version: 0.2
 
 phases:
+  install:
+    runtime-versions:
+      java: corretto8
   pre_build:
     commands:
+      - echo Installing dependencies...
+      - mvn package
       - echo Logging in to Amazon ECR...
       - aws --version
       - AWS_DOCKER_URI=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
@@ -13,7 +18,9 @@ phases:
   build:
     commands:
       - echo Build started on `date`
-      - echo Building the Docker image...
+      - echo Building Jar file...
+      - mvn package
+      - echo Building Docker image...
       - docker build -t $REPOSITORY_URI:latest .
       - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
   post_build:
